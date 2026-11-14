@@ -23,6 +23,21 @@ O modelo base não previu a classe "neutro" em nenhuma das 600 avaliações (F1 
 4. **Treino:** LoRA (r = 16, alpha = 32) em todas as camadas lineares da atenção e do MLP, 1 época, perda calculada só na resposta. Foram treinados 8,8 milhões de parâmetros, 1,75% do modelo.
 5. **Avaliação:** o modelo ajustado é avaliado no mesmo teste, e as métricas são salvas em `resultados.json`.
 
+## Tecnologias utilizadas
+
+- **Python**: linguagem de todo o projeto
+- **Qwen2.5-0.5B-Instruct**: modelo de linguagem base que foi ajustado
+- **PyTorch**: execução do modelo e do treino na GPU
+- **Hugging Face Transformers** (5.23.0): carregamento do modelo e do tokenizer, prompt de chat e `Trainer` para o treino
+- **PEFT** (0.21.3): LoRA, que treina só 1,75% dos parâmetros do modelo
+- **Hugging Face Datasets** (5.2.0): construção do conjunto de treino
+- **Accelerate**: usado pelo `Trainer` para gerenciar o treino na GPU
+- **Hugging Face Hub**: download do CSV dos dados e publicação do adapter
+- **scikit-learn**: métricas de avaliação (acurácia, F1, relatório por classe e matriz de confusão)
+- **pandas** e **NumPy**: filtragem, rotulagem e sorteio das amostras
+- **Kaggle Notebooks**: ambiente de execução, com GPU gratuita
+- **Git e GitHub**: versionamento e publicação do código
+
 ## Arquivos
 
 | Arquivo | O que é |
