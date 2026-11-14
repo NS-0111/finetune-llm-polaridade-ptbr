@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project specific
+out/
+adapter_polaridade/
+*.zip
+.env
+*.token
