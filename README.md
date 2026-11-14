@@ -7,11 +7,11 @@
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Modelo no Hugging Face](https://img.shields.io/badge/Modelo-Hugging%20Face-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/nicollesantana/qwen2.5-0.5b-polaridade-ptbr-lora)
-[![Acurácia](https://img.shields.io/badge/Acur%C3%A1cia-76%2C5%25-brightgreen)](#-métricas-do-modelo)
-[![F1 macro](https://img.shields.io/badge/F1%20macro-0%2C76-brightgreen)](#-métricas-do-modelo)
-[![Licença](https://img.shields.io/badge/Licen%C3%A7a-CC%20BY--NC--SA%204.0-lightgrey)](#-licenças-e-créditos)
+[![Acurácia](https://img.shields.io/badge/Acur%C3%A1cia-76%2C5%25-brightgreen)](#métricas-do-modelo)
+[![F1 macro](https://img.shields.io/badge/F1%20macro-0%2C76-brightgreen)](#métricas-do-modelo)
+[![Licença](https://img.shields.io/badge/Licen%C3%A7a-CC%20BY--NC--SA%204.0-lightgrey)](#licenças-e-créditos)
 
-[Modelo publicado](https://huggingface.co/nicollesantana/qwen2.5-0.5b-polaridade-ptbr-lora) · [Como usar](#-como-usar) · [Métricas](#-métricas-do-modelo) · [Exemplos](#-exemplos-de-uso)
+[Modelo publicado](https://huggingface.co/nicollesantana/qwen2.5-0.5b-polaridade-ptbr-lora) · [Como usar](#como-usar) · [Métricas](#métricas-do-modelo) · [Exemplos](#exemplos-de-uso)
 
 </div>
 
@@ -19,18 +19,18 @@
 
 ## Sumário
 
-- [Sobre o projeto](#-sobre-o-projeto)
-- [Características principais](#-características-principais)
-- [Como usar](#-como-usar)
-- [Como funciona](#-como-funciona)
-- [Estrutura do projeto](#-estrutura-do-projeto)
-- [Tecnologias utilizadas](#-tecnologias-utilizadas)
-- [Métricas do modelo](#-métricas-do-modelo)
-- [Exemplos de uso](#-exemplos-de-uso)
-- [Notas importantes](#-notas-importantes)
-- [Limitações](#-limitações)
-- [Licenças e créditos](#-licenças-e-créditos)
-- [Autora](#-autora)
+- [Sobre o projeto](#sobre-o-projeto)
+- [Características principais](#características-principais)
+- [Como usar](#como-usar)
+- [Como funciona](#como-funciona)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Tecnologias utilizadas](#tecnologias-utilizadas)
+- [Métricas do modelo](#métricas-do-modelo)
+- [Exemplos de uso](#exemplos-de-uso)
+- [Notas importantes](#notas-importantes)
+- [Limitações](#limitações)
+- [Licenças e créditos](#licenças-e-créditos)
+- [Autora](#autora)
 
 ---
 
