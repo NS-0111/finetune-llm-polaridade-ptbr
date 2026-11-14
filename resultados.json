@@ -1,0 +1,14 @@
+[
+  {
+    "modelo": "base (zero-shot)",
+    "accuracy": 0.615,
+    "macro_f1": 0.4923576818657945,
+    "invalidos": 1
+  },
+  {
+    "modelo": "fine-tuned (LoRA)",
+    "accuracy": 0.765,
+    "macro_f1": 0.7636889979722475,
+    "invalidos": 0
+  }
+]
