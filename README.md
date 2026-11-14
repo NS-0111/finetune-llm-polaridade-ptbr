@@ -1,6 +1,6 @@
 <div align="center">
 
-# Fine-tuning de LLM para Polaridade de Avaliações em Português
+# Fine-tuning de LLM para Classificar Polaridade de Avaliações em Português
 
 **Um LLM de 0,5B de parâmetros ajustado com LoRA para ler avaliações de clientes e classificá-las como negativas, neutras ou positivas.**
 
