@@ -1,6 +1,6 @@
 <div align="center">
 
-# Fine-tuning de LLM para classificar polaridade de avaliações de e-commerce
+# Fine-tuning de LLM para classificar polaridade de avaliações de e-commerce em PT-BR
 
 **Um LLM de 0,5B de parâmetros ajustado com LoRA para ler avaliações de clientes e classificá-las como negativas, neutras ou positivas.**
 
