@@ -26,6 +26,7 @@
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Tecnologias utilizadas](#tecnologias-utilizadas)
 - [Métricas do modelo](#métricas-do-modelo)
+- [Análise de erros](#análise-de-erros)
 - [Exemplos de uso](#exemplos-de-uso)
 - [Notas importantes](#notas-importantes)
 - [Limitações](#limitações)
@@ -153,7 +154,9 @@ finetune-llm-polaridade-ptbr/
 ├── finetune_llm_polaridade_ptbr.ipynb     # Execução completa no Kaggle, com as saídas
 ├── finetune_polaridade_ptbr.py            # Script limpo, dividido em células
 ├── resultados.json                        # Métricas do modelo base e do ajustado
+├── analise_de_erros.py                    # Análise de erros do modelo no teste
 ├── requirements.txt                       # Dependências do projeto
+├── LICENSE                                # Licença MIT do código
 └── .gitignore
 ```
 
@@ -214,6 +217,59 @@ O modelo base não previu "neutro" em nenhuma das 600 avaliações. Depois do aj
 
 ---
 
+## Análise de erros
+
+Para entender de onde vem a acurácia de 76,5%, reconstruí o mesmo teste de 600 avaliações, carreguei o adapter **publicado no Hugging Face** e analisei os 141 erros (script `analise_de_erros.py`). O resultado reproduziu a acurácia de 0,765 e a mesma matriz de confusão da seção anterior.
+
+### Onde o modelo erra
+
+| Nota (estrelas) | Avaliações no teste | Acerto | Previu negativo / neutro / positivo |
+|:---:|:---:|:---:|:---:|
+| 1 | 156 | 94,2% | 147 / 8 / 1 |
+| 2 | 44 | 72,7% | 32 / 12 / 0 |
+| 3 | 200 | 65,5% | 31 / 131 / 38 |
+| 4 | 70 | 54,3% | 2 / 30 / 38 |
+| 5 | 130 | 85,4% | 2 / 17 / 111 |
+
+- **Quase todo erro é entre classes vizinhas:** 136 dos 141 erros (96,5%) envolvem o neutro. Só 5 são graves: 4 positivas lidas como negativas e 1 negativa lida como positiva.
+- **Os erros se concentram no meio da escala:** as notas 3 e 4 respondem por 101 dos 141 erros (71,6%). Nas notas extremas, principalmente 1 estrela, o modelo acerta muito mais.
+- **A nota 4 é a mais difícil (54,3%):** 30 das 70 avaliações de 4 estrelas foram lidas como neutras. Os grupos por nota são pequenos, porque o teste é balanceado por classe e não por nota.
+
+### O que os erros parecem ser
+
+Li 28 erros (7 de cada tipo de confusão). É uma leitura qualitativa e não uma contagem, mas o padrão é claro. Os trechos abaixo são do B2W-Reviews01.
+
+- **Rótulo discutível.** Várias avaliações de 3 estrelas têm texto claramente elogioso, como "Muito bonito, entrega antes do prazo, chegou perfeito". Nesses casos a resposta do modelo (positivo) é defensável, e quem destoa é a nota.
+- **Perguntas e fatos no lugar de opinião.** Há avaliações que são perguntas, como "Qual a capacidade de conexão deste modelo?" (2 estrelas) e "Alguém que comprou sabe se esquenta muito?" (5 estrelas), ou descrições factuais. Nelas a estrela não mede a polaridade do texto.
+- **Avaliações mistas.** Elogio e queixa na mesma frase, como "O produto é bonito porém de baixa qualidade" (2 estrelas). O modelo tende ao neutro.
+- **Reclamações com 3 estrelas.** Algumas avaliações neutras pela nota são claramente negativas no texto, como a de um produto que chegou sem as conexões necessárias. O modelo as lê como negativas.
+
+### Um indício sobre como o modelo decide
+
+Contei as avaliações com palavras de contraste ("mas", "porém", "apesar de" e parecidas):
+
+| Classe verdadeira | Com contraste | Sem contraste |
+|---|:---:|:---:|
+| Positivo | 13 de 23 lidas como neutras (57%) | 34 de 177 lidas como neutras (19%) |
+| Neutro | 10 de 61 erradas (16%) | 59 de 139 erradas (42%) |
+
+O modelo parece usar essas palavras como sinal de neutralidade: os positivos que têm um "mas" viram neutros com mais frequência, e os neutros sem "mas" são mais difíceis de reconhecer. É um indício e não uma prova: a busca por palavras é grosseira, e só 23 positivos têm contraste.
+
+### Hipóteses
+
+| Hipótese | O que os dados mostram |
+|---|---|
+| O treino balanceado fez o modelo preferir "neutro" | **Não sustentada.** O modelo previu neutro 198 vezes, com 200 casos reais, e as trocas se equilibram: 67 negativos e positivos lidos como neutros, contra 69 neutros lidos como extremos |
+| A nota 3 é ambígua e o rótulo por estrelas é ruidoso | **Sustentada** pelo padrão dos erros e pela leitura dos exemplos, mas sem medir quanto. Seria preciso anotar uma amostra à mão |
+| O modelo é pequeno e treinou só 1 época | **Não testada.** Exigiria treinar mais ou usar um modelo maior |
+| Tamanho do texto ou categoria do produto | **Sem efeito claro.** O acerto ficou entre 74,7% e 78,2% nas quatro faixas de tamanho. As categorias com 20 a 102 avaliações variaram de 68% a 80%, o que cabe na variação esperada em amostras tão pequenas |
+
+### O que isso significa
+
+O teto de acurácia neste dataset provavelmente fica abaixo de 100%, porque parte dos "erros" vem de rótulos discutíveis. Eu não medi esse teto. Próximos passos naturais: anotar à mão uma amostra de erros para estimar o ruído dos rótulos e comparar com modelos mais simples (um modelo clássico e um BERT) nas mesmas 600 avaliações.
+
+---
+
 ## Exemplos de uso
 
 Frases testadas no modelo publicado, com a resposta que ele deu:
@@ -253,7 +309,8 @@ Frases testadas no modelo publicado, com a resposta que ele deu:
 
 ## Licenças e créditos
 
-- **Este adapter:** CC BY-NC-SA 4.0, por precaução com a licença do dataset original. A página do dataset no Hugging Face indica CC BY 4.0, mas o registro do corpus indica CC BY-NC-SA 4.0.
+- **Código deste repositório:** licença MIT (arquivo `LICENSE`).
+- **Adapter publicado no Hugging Face:** CC BY-NC-SA 4.0, por precaução com a licença do dataset original. A página do dataset no Hugging Face indica CC BY 4.0, mas o registro do corpus indica CC BY-NC-SA 4.0.
 - **Modelo base:** Qwen2.5-0.5B-Instruct, licença Apache 2.0.
 - **Dados:** B2W-Reviews01, de Real, Oshiro e Mafra (2019), *B2W-reviews01: an open product reviews corpus*, STIL.
 
