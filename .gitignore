@@ -225,3 +225,4 @@ adapter_polaridade/
 *.zip
 .env
 *.token
+predicoes_teste.csv
