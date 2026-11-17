@@ -1,0 +1,9 @@
+streamlit
+transformers==5.23.0
+peft==0.21.3
+datasets==5.2.0
+accelerate
+scikit-learn
+pandas
+torch
+huggingface_hub
