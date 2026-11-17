@@ -18,7 +18,6 @@ EXEMPLOS = {
     "Positivo": "Produto excelente, chegou antes do prazo e superou minhas expectativas. Recomendo!",
     "Negativo": "Veio com defeito e a loja não respondeu meus contatos. Péssima experiência, não compro mais.",
     "Neutro": "O produto é razoável. Funciona, mas não é nada demais, e a entrega demorou um pouco.",
-    "Ambíguo": "Gostei da qualidade, mas o preço está muito acima do que vale.",
 }
 
 
