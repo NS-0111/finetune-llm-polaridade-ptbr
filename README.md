@@ -7,11 +7,12 @@
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Modelo no Hugging Face](https://img.shields.io/badge/Modelo-Hugging%20Face-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/nicollesantana/qwen2.5-0.5b-polaridade-ptbr-lora)
+[![Demo online](https://img.shields.io/badge/Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://polaridade-ptbr.streamlit.app/)
 [![Acurácia](https://img.shields.io/badge/Acur%C3%A1cia-76%2C5%25-brightgreen)](#métricas-do-modelo)
 [![F1 macro](https://img.shields.io/badge/F1%20macro-0%2C76-brightgreen)](#métricas-do-modelo)
 [![Licença](https://img.shields.io/badge/Licen%C3%A7a-CC%20BY--NC--SA%204.0-lightgrey)](#licenças-e-créditos)
 
-[Modelo publicado](https://huggingface.co/nicollesantana/qwen2.5-0.5b-polaridade-ptbr-lora) · [Como usar](#como-usar) · [Métricas](#métricas-do-modelo) · [Exemplos](#exemplos-de-uso)
+[Testar online](https://polaridade-ptbr.streamlit.app/) · [Modelo publicado](https://huggingface.co/nicollesantana/qwen2.5-0.5b-polaridade-ptbr-lora) · [Como usar](#como-usar) · [Métricas](#métricas-do-modelo) · [Exemplos](#exemplos-de-uso)
 
 </div>
 
@@ -67,6 +68,13 @@ A pergunta que ele responde é simples: um modelo pequeno, treinado por poucos m
 ---
 
 ## Como usar
+
+### Testar online
+
+Não precisa instalar nada: **[abra a demo no Streamlit](https://polaridade-ptbr.streamlit.app/)**, cole uma avaliação de produto em português e veja a classe prevista com a probabilidade de cada classe.
+
+> [!NOTE]
+> A demo roda em CPU num plano gratuito. A primeira classificação demora mais, porque o modelo é carregado nesse momento. Se o app estiver "dormindo" por falta de uso, clique no botão para acordá-lo. A demo carrega o modelo em bfloat16, então uma resposta pode divergir de vez em quando do que o código abaixo (float32) mostra.
 
 ### Usar o modelo publicado
 
@@ -156,6 +164,9 @@ finetune-llm-polaridade-ptbr/
 ├── resultados.json                        # Métricas do modelo base e do ajustado
 ├── analise_de_erros.py                    # Análise de erros do modelo no teste
 ├── requirements.txt                       # Dependências do projeto
+├── demo/
+│   ├── app.py                             # App Streamlit para testar o modelo
+│   └── requirements.txt                   # Dependências da demo
 ├── LICENSE                                # Licença MIT do código
 └── .gitignore
 ```
@@ -176,6 +187,7 @@ finetune-llm-polaridade-ptbr/
 | **Hugging Face Hub** | Download do CSV dos dados e publicação do adapter |
 | **scikit-learn** | Métricas de avaliação: acurácia, F1, relatório por classe e matriz de confusão |
 | **pandas** e **NumPy** | Filtragem, rotulagem e sorteio das amostras |
+| **Streamlit** | Interface web para testar o modelo, hospedada no Streamlit Community Cloud |
 | **Kaggle Notebooks** | Ambiente de execução, com GPU gratuita |
 | **Git e GitHub** | Versionamento e publicação do código |
 
